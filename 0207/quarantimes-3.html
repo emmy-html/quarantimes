@@ -44,7 +44,7 @@ ROOM 0
 0,h,h,q,v,r,r,r,12,r,r,r,z,s,0,0
 0,h,l,n,p,p,p,p,p,p,p,p,p,t,0,0
 0,m,k,o,o,o,o,o,o,o,o,o,o,t,0,0
-NAME level 1
+NAME level1
 EXT 9,12 1 14,14 FX fade_b
 PAL 0
 
@@ -65,7 +65,7 @@ ROOM 1
 63,6m,6f,6g,6h,6j,6v,6w,0,0,0,0,0,0,0,0
 62,6l,6k,6k,6n,0,0,0,0,0,0,0,0,0,0,0
 61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-NAME level 2
+NAME level2
 ITM 2 10,8
 ITM 3 6,8
 PAL 1
@@ -86,9 +86,30 @@ ROOM 2
 71,78,79,79,79,79,79,79,79,79,79,79,79,79,7a,70
 72,6y,6y,6y,6y,6y,6y,6y,6y,6y,6y,6y,6y,6y,6y,73
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d,7d
-NAME level 3
+7d,7d,7d,7d,7d,7d,7d,7d,7d,12,7d,7d,7d,7d,7d,7d
+NAME level3
+ITM 4 11,15
 PAL 1
+
+ROOM 3
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,a,a,a,0,0,0,0,0,0,0,0,0
+0,0,0,a,a,0,a,a,0,0,0,0,0,0,0,0
+0,0,0,a,0,0,a,a,a,a,a,a,0,0,0,0
+0,0,a,a,0,a,0,0,0,0,0,a,a,0,0,0
+0,0,0,a,0,a,0,0,0,0,0,0,a,0,0,0
+0,0,0,a,a,a,a,0,0,0,0,0,a,0,0,0
+0,0,0,0,0,0,a,0,0,0,0,0,a,0,0,0
+0,0,0,0,0,0,a,0,0,0,0,0,a,0,0,0
+0,0,0,0,0,0,a,0,0,0,0,a,0,0,0,0
+0,0,0,0,0,0,0,a,a,a,a,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NAME level4
+PAL 0
 
 TIL 11
 10011001
@@ -3153,7 +3174,6 @@ SPR b
 00011000
 00011000
 NAME plant 1
-DLG 3
 
 SPR c
 00000110
@@ -3187,7 +3207,7 @@ SPR e
 01111110
 11111111
 NAME outdoor cactus
-DLG 4
+DLG d
 POS 0 8,12
 
 SPR f
@@ -3239,6 +3259,44 @@ NAME mini box
 DLG b
 POS 1 2,15
 
+SPR j
+00000000
+11111111
+11111111
+11111111
+10011001
+10011001
+10011001
+10011001
+NAME top of door
+POS 0 9,11
+
+SPR k
+10011001
+10011001
+11111111
+11111111
+11111101
+11111111
+11111111
+11111111
+NAME bottom of door
+DLG c
+POS 0 9,12
+
+SPR l
+00011000
+00011000
+11011000
+11111011
+00111011
+00111110
+00111110
+00111000
+NAME test plant
+DLG e
+POS 2 9,14
+
 ITM 0
 00000000
 00000000
@@ -3283,12 +3341,23 @@ ITM 3
 11111110
 NAME remote
 
-DLG 3
-I'm a cactus!
-NAME outdoor cactus dialog
+ITM 4
+00001100
+00010010
+00100001
+11111111
+01111111
+00111111
+00111111
+00111111
+NAME test watering can
+DLG f
 
 DLG 4
+"""
 I just inherited this loft from my Auntie Bette! She's not dead, just on her latest Eat, Pray, Meditate adventure in.. Iceland? Wherever she is, she's wishing me well! Let's go inside...
+{cactus = 10}
+"""
 NAME Outdoor Cactus Dialog
 
 DLG 6
@@ -3301,6 +3370,7 @@ I have recently decided that it is my life's journey to become enlightened (agai
 Auntie Bette{rbw}
 {item "2" 0}
 {item "2" {{item "2"} + 2}}
+{item "3" 10}
 """
 NAME Note dialog
 
@@ -3324,12 +3394,50 @@ DLG b
 """
 {
   - {item "3"} == 10 ?
-    (exit "<level 3>,<0>,<0>,<fade_b>")
+    (exit "level3,0,0,fade_b")
   - else ?
     Go read the freaking note!!
 }
 """
 NAME mini box dialog
+
+DLG c
+"""
+{
+  - cactus == 10 ?
+    (exit "level2,0,0,fade_b")
+  - else ?
+    Check on the cactus.
+}
+"""
+NAME bottom of door dialog
+
+DLG d
+"""
+{
+  - cactus >= 10 ?
+    Go inside!
+  - else ?
+    I just inherited this loft from my Auntie Bette! She's not dead yet, just on her latest Eat, Pray, Meditate adventure in… Iceland? Wherever she is, she's wishing me well! Let's go inside...
+}
+{cactus = 10}
+"""
+NAME outdoor cactus dialog
+
+DLG e
+"""
+{
+  - water >= 10 ?
+    (exit "level4,0,0,fade_b")
+  - else ?
+    Please water me!
+}
+"""
+NAME test plant dialog
+
+DLG f
+{water = 10}
+NAME test watering can dialog
 
 VAR a
 42
@@ -3339,6 +3447,12 @@ name
 
 VAR remote
 10
+
+VAR cactus
+0
+
+VAR water
+0
 
 
 </script>
